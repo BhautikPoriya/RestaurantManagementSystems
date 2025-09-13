@@ -27,6 +27,14 @@ List tools and versions needed to run the project :
 
 ---
 
+##  Packages
+
+List Nuget Pacages needed to run the project :
+
+- Install-Package FluentValidation.AspNetCore
+
+---
+
 ##  Contact
 
 - Developer : BHAUTIK N. PORIYA
