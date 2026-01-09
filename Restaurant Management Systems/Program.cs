@@ -1,7 +1,14 @@
+using Restaurant_Management_Systems.Factories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpContextAccessor();
+
+// Register Factory
+builder.Services.AddScoped<ICommonModelFactory, CommonModelFactory>();
 
 var app = builder.Build();
 

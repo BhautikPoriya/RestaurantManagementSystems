@@ -1,0 +1,8 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <a href="/">
+        <img src="@Url.Content(Model)" alt="Logo" height="100px" />
+    </a>
+}

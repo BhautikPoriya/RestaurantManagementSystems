@@ -1,0 +1,79 @@
+﻿@model LoginModel
+
+@{
+    var registerUrl = Url.Action("Register", "Customer");
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <!-- Left side for new users -->
+        <div class="auth-side new-user">
+            <h2 class="auth-title1">New Customer</h2>
+            <p>Create an account to enjoy all features</p>
+            <button type="button" class="btn btn-register" onclick="location.href='@registerUrl'">
+                Register Yourself
+            </button>
+        </div>
+
+        <!-- Right side for login -->
+        <div class="auth-side returning-user">
+            <h2 class="auth-title">Returning Customer</h2>
+
+            <form asp-route="Login" method="post" autocomplete="off" class="auth-form">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @if (Model.UsernamesEnabled)
+                {
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input asp-for="Username" class="form-control username" autofocus />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control email" autofocus />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <div class="password-wrapper">
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span class="password-eye" id="password-eye">
+                            <img id="eyeIcon" src="~/images/hide.png" alt="Show/Hide Password" style="width:22px; cursor:pointer;" />
+                        </span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-login">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script asp-location="Footer">
+        $(function () {
+            const password = $("#@Html.IdFor(m => m.Password)");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            $(".password-eye").on("click", function () {
+                let type;
+                if (password.attr("type") === "password") {
+                    type = "text"; // Show password
+                    eyeIcon.src = "/images/show.png";
+                } else {
+                    type = "password"; // Hide password
+                    eyeIcon.src = "/images/hide.png";
+                }
+                password.attr("type", type);
+            });
+        });
+    </script>
+}
