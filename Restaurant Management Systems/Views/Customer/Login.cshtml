@@ -23,6 +23,8 @@
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                <input type="hidden" asp-for="UsernamesEnabled" />
+
                 @if (Model.UsernamesEnabled)
                 {
                     <div class="form-group">

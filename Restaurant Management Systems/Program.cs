@@ -1,14 +1,20 @@
 using Restaurant_Management_Systems.Factories;
+using Restaurant_Management_Systems.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
 // Register Factory
 builder.Services.AddScoped<ICommonModelFactory, CommonModelFactory>();
+
+// Register Services
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IPasswordHelper, PassowordHelper>();
 
 var app = builder.Build();
 
@@ -24,6 +30,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

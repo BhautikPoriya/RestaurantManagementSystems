@@ -1,4 +1,5 @@
 ﻿@using Restaurant_Management_Systems.Components
+@using static Restaurant_Management_Systems.Utiles.RestaurantEnums
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,13 @@
 </head>
 <body>
     <header>
+        @if (Context.Session.GetInt32("RoleId") == UserRoles.Admin.GetHashCode())
+        {
+            <div class="alert alert-primary" role="alert">
+                Admin access granted. <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Go to
+                Admin Panel</a>.
+            </div>
+        }
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <div class="header-logo">
@@ -28,9 +36,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Login</a>
-                        </li>
+                        @if (Context.Session.GetString("UserLoggedIn") == "false" || string.IsNullOrEmpty(Context.Session.GetString("UserLoggedIn")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

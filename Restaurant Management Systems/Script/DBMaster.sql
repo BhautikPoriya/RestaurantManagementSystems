@@ -49,6 +49,7 @@ BEGIN
 		UserName VARCHAR(50) NOT NULL,
 		FirstName VARCHAR(50) NOT NULL,
 		LastName VARCHAR(50) NOT NULL,
+		Password VARCHAR(255) NOT NULL,
 		Email VARCHAR(100) NOT NULL UNIQUE,
 		DateOfBirth DATE NULL,
 		Gender VARCHAR(10) NULL,
@@ -61,6 +62,13 @@ BEGIN
 END
 GO
 
+-- INSERT DEFAULT SYSTEM ADMIN USER -- [GO] --
+IF NOT EXISTS (SELECT 1 FROM t_sys_users WHERE UserName = 'SystemAdmin')
+BEGIN
+	INSERT INTO t_sys_users (UserName,FirstName,LastName,Email,RoleId,IsActive,Password) 
+	VALUES ('SystemAdmin', 'System','Admin', 'systemadmin@rajdhani.in',1,1,'N2KGmLYReYPCd2g5CiVXEw==');
+END
+
 -- CREATE TABLE STAFF -- [GO] --
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 't_sys_staff')
 BEGIN
@@ -71,6 +79,7 @@ BEGIN
 		Phone VARCHAR(20) NOT NULL,
 		Gender VARCHAR(10) NULL,        
         Shift VARCHAR(50) NOT NULL,
+		RoleId INT NOT NULL,
         IsActive BIT DEFAULT 1
     );
 END
