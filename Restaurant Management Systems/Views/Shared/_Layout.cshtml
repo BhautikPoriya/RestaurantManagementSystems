@@ -12,13 +12,6 @@
 </head>
 <body>
     <header>
-        @if (Context.Session.GetInt32("RoleId") == UserRoles.Admin.GetHashCode())
-        {
-            <div class="alert alert-primary" role="alert">
-                Admin access granted. <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Go to
-                Admin Panel</a>.
-            </div>
-        }
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <div class="header-logo">
@@ -33,10 +26,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (Context.Session.GetString("UserLoggedIn") == "false" || string.IsNullOrEmpty(Context.Session.GetString("UserLoggedIn")))
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link profile-nav-link p-0" asp-controller="Customer" asp-action="Profile" title="Profile">
+                                    <img src="~/images/woman.png" alt="User Avatar" class="rounded-circle profile-icon" />
+                                </a>
+                            </li>
+                        }
+                        else
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Login">Login</a>

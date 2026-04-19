@@ -1,0 +1,7 @@
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile</h2>
+<p>Welcome, @User.Identity.Name.</p>
+<p>From here you can manage your account or <a asp-controller="Customer" asp-action="Logout">Logout</a>.</p>

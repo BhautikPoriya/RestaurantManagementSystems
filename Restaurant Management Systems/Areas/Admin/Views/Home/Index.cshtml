@@ -1,9 +1,246 @@
 @{
     ViewData["Title"] = "Admin Panel";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1>Admin Panel</h1>
-    <p>Welcome to the admin area. Only users with <strong>RoleId = 1</strong> can see this link.</p>
-    <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #f5f7fb;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "Admin" })">
+                <i class="fa fa-utensils" style="color: #00932A; font-size: 20px;"></i>
+                <strong style="color: #00932A; margin-left: 8px;">Admin Panel</strong>
+            </a>
+            <button class="navbar-toggler d-md-none" type="button" id="sidebarToggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="navbar-collapse ms-auto">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Logout"><i class="fa fa-sign-out me-2"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="admin-sidebar" id="adminSidebar">
+
+            <!-- Dashboard -->
+            <a href="#" class="menu-item active"><i class="fa fa-home"></i> Dashboard</a>
+
+            <!-- Customer Section -->
+            <div class="menu-title">Customer Management</div>
+            <div class="menu-item" data-bs-toggle="collapse" data-bs-target="#customerMenu">
+                <i class="fa fa-users"></i> Customers
+                <i class="fa fa-chevron-down float-end" style="font-size: 12px;"></i>
+            </div>
+            <div class="collapse submenu" id="customerMenu">
+                <a href="#"><i class="fa fa-user me-2" style="font-size: 12px;"></i> Users</a>
+                <a href="#"><i class="fa fa-briefcase me-2" style="font-size: 12px;"></i> Staff</a>
+                <a href="#"><i class="fa fa-calendar-alt me-2" style="font-size: 12px;"></i> Staff Leave Management</a>
+                <a href="#"><i class="fa fa-user-shield me-2" style="font-size: 12px;"></i> Roles</a>
+            </div>
+
+            <!-- Catalog Section -->
+            <div class="menu-title">Catalog Management</div>
+            <div class="menu-item" data-bs-toggle="collapse" data-bs-target="#catalogMenu">
+                <i class="fa fa-box"></i> Catalog
+                <i class="fa fa-chevron-down float-end" style="font-size: 12px;"></i>
+            </div>
+            <div class="collapse submenu" id="catalogMenu">
+                <a href="#"><i class="fa fa-utensils me-2" style="font-size: 12px;"></i> Dishes</a>
+                <a href="#"><i class="fa fa-tags me-2" style="font-size: 12px;"></i> Categories</a>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="menu-title">Order Management</div>
+            <div class="menu-item" data-bs-toggle="collapse" data-bs-target="#ordersMenu">
+                <i class="fa fa-shopping-cart"></i> Orders
+                <i class="fa fa-chevron-down float-end" style="font-size: 12px;"></i>
+            </div>
+            <div class="collapse submenu" id="ordersMenu">
+                <a href="#"><i class="fa fa-list me-2" style="font-size: 12px;"></i> All Orders</a>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="menu-title">Report Management</div>
+            <div class="menu-item" data-bs-toggle="collapse" data-bs-target="#reportsMenu">
+                <i class="fa fa-chart-bar"></i> Reports
+                <i class="fa fa-chevron-down float-end" style="font-size: 12px;"></i>
+            </div>
+            <div class="collapse submenu" id="reportsMenu">
+                <a href="#"><i class="fa fa-calendar-check me-2" style="font-size: 12px;"></i> Day End</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <!-- Header -->
+            <div class="admin-header">
+                <h1>Dashboard Overview</h1>
+                <p>Welcome back! Here's what's happening with your restaurant today.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label"><i class="fa fa-shopping-cart me-2" style="color: #00932A;"></i> Total Orders</div>
+                    <div class="stat-value">2,500</div>
+                    <div class="stat-change"><i class="fa fa-arrow-up me-1"></i> 12% increase</div>
+                </div>
+
+                <div class="stat-card yellow-border">
+                    <div class="stat-label"><i class="fa fa-users me-2" style="color: #ffdd57;"></i> Total Customers</div>
+                    <div class="stat-value">1,340</div>
+                    <div class="stat-change"><i class="fa fa-arrow-up me-1"></i> 8% increase</div>
+                </div>
+
+                <div class="stat-card blue-border">
+                    <div class="stat-label"><i class="fa fa-dollar-sign me-2" style="color: #0d6efd;"></i> Total Revenue</div>
+                    <div class="stat-value">$5,567</div>
+                    <div class="stat-change"><i class="fa fa-arrow-up me-1"></i> 15% increase</div>
+                </div>
+
+                <div class="stat-card red-border">
+                    <div class="stat-label"><i class="fa fa-redo me-2" style="color: #dc3545;"></i> Returning Customers</div>
+                    <div class="stat-value">865</div>
+                    <div class="stat-change"><i class="fa fa-arrow-down me-1"></i> 5% decrease</div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Table -->
+            <div class="table-container">
+                <h5 class="chart-title mb-4"><i class="fa fa-list me-2" style="color: #00932A;"></i> Recent Orders</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD001</td>
+                                <td>John Doe</td>
+                                <td>$45.99</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td>Apr 10, 2026</td>
+                                <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD002</td>
+                                <td>Jane Smith</td>
+                                <td>$32.50</td>
+                                <td><span class="badge-warning">Processing</span></td>
+                                <td>Apr 10, 2026</td>
+                                <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD003</td>
+                                <td>Robert Johnson</td>
+                                <td>$78.25</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td>Apr 09, 2026</td>
+                                <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD004</td>
+                                <td>Emily Davis</td>
+                                <td>$55.75</td>
+                                <td><span class="badge-danger">Cancelled</span></td>
+                                <td>Apr 09, 2026</td>
+                                <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD005</td>
+                                <td>Michael Brown</td>
+                                <td>$92.00</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td>Apr 08, 2026</td>
+                                <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle')?.addEventListener('click', function () {
+            const sidebar = document.getElementById('adminSidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when a menu item is clicked on mobile
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function () {
+                if (window.innerWidth < 768) {
+                    document.getElementById('adminSidebar').classList.remove('active');
+                }
+            });
+        });
+
+        // Only one sidebar dropdown stays open at a time
+        document.querySelectorAll('.menu-item[data-bs-toggle="collapse"]').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = this.getAttribute('data-bs-target');
+                const collapseElement = document.querySelector(target);
+                if (collapseElement) {
+                    document.querySelectorAll('.submenu.collapse.show').forEach(openElement => {
+                        if (openElement !== collapseElement) {
+                            bootstrap.Collapse.getOrCreateInstance(openElement, {
+                                toggle: false
+                            }).hide();
+                        }
+                    });
+
+                    const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseElement, {
+                        toggle: false
+                    });
+                    bsCollapse.toggle();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
